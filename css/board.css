@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+.board-top-search {float: right; margin-bottom: 10px;}
+.board-top-search input {height: 25px; line-height: 25px; padding: 0 10px; border-radius: 2px; border: 1px solid #999; font-size: 14px; vertical-align: middle; margin-right: 3px; box-sizing: border-box;}
+
+.board-table {width: 100%; text-align: center; overflow-x: scroll;}
+.board-table thead tr th, .board-table tbody tr td {padding: 14px 5px; vertical-align: middle; white-space: normal; word-break: keep-all;}
+.board-table thead tr th {border-top: 2px solid #02ad96; border-bottom: 1px solid #ccc; font-size: 16px; color: #333;}
+.board-table tbody tr td {border-bottom: 1px solid #ccc; font-size: 15px; color: #666;}
+.board-table tbody tr:hover {background-color: #f8f8f8;}
+
+.pagination {width: 100%; margin: 30px auto 0; text-align: center; display: flex; justify-content: center;}
+.pagination > div, .pagination input[type=image] {width: 35px; height: 35px; line-height: 37px; border-radius: 100%; border: 1px solid #ddd; text-align: center; vertical-align: middle;}
+.pagination .page-prev {margin-right: 5px;}
+.pagination span {width: 35px; height: 35px; line-height: 36px; font-size: 15px; border-radius: 100%; background-color: #ccc; color: #fff; display: inline-block; text-align: center; cursor: pointer; margin-right: 5px;}
+.pagination span.active {background-color: #02ad96;}
+
+.view-wrap .view-header {border-top: 2px solid #02ad96; border-bottom: 1px dashed #999; padding: 25px 20px;}
+.view-wrap .view-header h3 {font-size: 22px; margin-bottom: 15px;}
+.view-wrap .view-header span {position: relative; font-size: 14px; color: #666; margin-right: 15px;}
+.view-wrap .view-header span::after {content: ''; display: block; position: absolute; top: 2.5px; right: -10px; width: 1px; height: 11px; background-color: #aaa;}
+.view-wrap .view-header span:last-child::after {display: none;}
+.view-wrap .view-file {background-color: #f8f8f8; padding: 20px 30px; border-bottom: 1px solid #ccc;}
+.view-wrap .view-file a {color: #666; font-size: 15px;}
+.view-wrap .view-con {border-bottom: 1px solid #ccc; padding: 20px;}
+.view-wrap .view-con p {font-size: 15px; color: #333; line-height: 26px;}
+
+@media all and (max-width:1024px) {
+    
+}
+
+@media all and (max-width:768px) {
+    .board-table thead tr th, .board-table tbody tr td {padding: 12px 5px;}
+    .board-table thead tr th {font-size: 15px;}
+    .board-table tbody tr td {font-size: 14px;}
+
+    .pagination > div {width: 30px; height: 30px; line-height: 32px;}
+    .pagination span {width: 30px; height: 30px; line-height: 31px;}
+}
+
+@media all and (max-width:568px) {
+    .board-table thead tr th, .board-table tbody tr td {padding: 10px 5px;}
+    .board-table thead tr th {font-size: 14px;}
+    .board-table tbody tr td {font-size: 13px; white-space: normal; word-break: keep-all; line-height: 18px;}
+
+    .pagination > div {width: 25px; height: 25px; line-height: 27px; font-size: 13px;}
+    .pagination span {width: 25px; height: 25px; line-height: 26px; font-size: 13px;}
+}
+
+@media all and (max-width:320px) {
+    
+}
