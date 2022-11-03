@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>swpm</title>
+
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/board.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/main.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.min.js" integrity="sha512-mMe7BAZPOkGbq+zhRBMNV3Q+5ZDzcUEOJoUYXbHpEcODkDBYbttaW7P108jX66AQgwgsAjvlP4Ayb/XLJZfmsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 팝업 창 닫기
+            $('.popup_close').on('click', function() {
+                console.log('d')
+                $('.popup-layer').css('display', 'none')
+            })
+
+             // 메시지 마지막에 시간 추가하기
+            var minute_last_msg = $('.msg-list li').last();
+            minute_last_msg.append('<div class="msg-time"><span>04:12</span></div>')
+
+            // 엔터 키 활성화
+            $('#input_search').keydown(function(key) {
+                if(key.keyCode == 13) {
+                    console.log('enter')
+                }
+            })
+
+            // 검색
+            var keyword;
+            var temp;
+
+            $('#input_search').keyup(function() {
+                keyword = $(this).val();
+                temp = $('.msg:contains("' + keyword + '")'); // class="msg" 인 것 중 keyword를 찾는다.                
+                console.log(temp)
+            })
+
+            $('#btn_search').on('click', function() {
+                var offset = $(temp[i]).offset(); // 선택한 요소의 위치를 반환
+                $('.middle').animate({scrollTop : offset.top - 40}, 400);    
+            })        
+            
+        })
+
+        $(function() {
+            // 모바일 사이드 메뉴 버튼
+            $('.menu').on('click', function() {
+                $('.side-wrap').addClass('active')
+                $('body').css('overflow-y','hidden')
+            })
+
+            // 모바일 사이드 메뉴 닫기
+            $('.btn-prev.side').on('click', function(){
+                $('.side-wrap').removeClass('active')
+                $('body').css('overflow-y','scroll')
+            })
+
+            // 검색창 활성화
+            $('.search').on('click', function() {
+                $('.top-search').addClass('active')
+                $('#input_search').focus();
+                $('.top-header').css('display', 'none')
+            })
+
+            // 검색창 비활성화
+            $('.cancel-search').on('click', function() {
+                $('.top-search').removeClass('active');
+                $('.top-header').css('display', 'flex')
+            })
+
+        })
+
+        // 이미지 다운로드
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], {
+                type: mime
+            });
+        }
+
+        function downloadImg(imgSrc) {
+            var image = new Image();
+            image.crossOrigin = "anonymous";
+            image.src = imgSrc;
+            var fileName = image.src.split("/").pop();
+            
+            image.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = this.width;
+                canvas.height = this.height;
+                canvas.getContext('2d').drawImage(this, 0, 0);
+
+                if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    window.navigator.msSaveBlob(dataURLtoBlob(canvas.toDataURL()), fileName);
+                } else {
+                    var link = document.createElement('a');
+                    link.href = canvas.toDataURL();
+                    link.download = fileName;
+                    link.click();
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <!-- 이미지 팝업 -->
+    <div class="popup-layer" style="display: none;">
+        <div class="popup-box">
+            <div class="popup-header flexbox jc-between ai-center">
+                <button class="popup_close">
+                    <img src="./images/ico_prev.png" alt="">
+                </button>
+                <img src="./images/ico_down.png" onclick="downloadImg('./images/210529.jpg');" alt="" style="cursor: pointer;">
+            </div>
+            <div class="popup-body flexbox ai-center" id="popup_back">
+                <div class="popup-media">
+                    <img src="./images/210529.jpg" id="msg_img" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 아이프레임 팝업 -->
+    <div class="popup-layer" style="display: none;" id="popup_iframe">
+        <div class="popup-box">
+            <div class="popup-header flexbox jc-between ai-center">
+                <button class="popup_close">
+                    <img src="./images/ico_prev.png" alt="">
+                </button>
+            </div>
+            <div class="popup-body flexbox ai-center" id="popup_back">
+                <div class="popup-media">
+                    <iframe src="https://drive.google.com/file/d/1atLY0dyz6aMbZgfJ0O21wYaqX5BvY1wM/preview" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="content-wrap">
+            <section class="top top-header flexbox ai-center jc-between">
+                <div class="left flexbox ai-center">
+                    <button class="btn-prev" onclick="history.go(-1)">
+                        <img src="./images/ico_prev.png" alt="">
+                    </button>
+                    <button class="btn-prev">
+                        <img src="./images/ico_msg.png" alt="">
+                    </button>
+                    <h3 class="chat-name">프메</h3>
+                </div>
+                <div class="right">
+                    <!-- <button class="search">
+                        <img src="./images/ico_search.png" alt="">
+                    </button>
+                    <button class="menu">
+                        <img src="./images/ico_menu.png" alt="">
+                    </button> -->
+                </div>
+            </section>
+            <section class="middle no-bottom">
+                <ul class="list">
+                    <li class="flexbox ai-center">
+                        <a href="/list_2021.html">
+                            <img src="./images/ico_cherry.png" alt="">
+                            <span>2021</span>
+                        </a>
+                    </li>
+                    <li class="flexbox ai-center">
+                        <a href="/list_2022.html">
+                            <img src="./images/ico_cherry.png" alt="">
+                            <span>2022</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
