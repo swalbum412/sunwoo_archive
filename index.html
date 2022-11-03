@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="./images/210529.jpg">
+    <meta property="og:site_name" content="Sunwoo">
+    <meta property="og:locale" content="ko_KR">
+    <meta name="og:title" content="선우">
+    <meta name="og:description" content="MEMORY OF SUNWOO">
+    <title>swpm</title>
+
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/board.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/main.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.min.js" integrity="sha512-mMe7BAZPOkGbq+zhRBMNV3Q+5ZDzcUEOJoUYXbHpEcODkDBYbttaW7P108jX66AQgwgsAjvlP4Ayb/XLJZfmsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 팝업 창 닫기
+            $('.popup_close').on('click', function() {
+                console.log('d')
+                $('.popup-layer').css('display', 'none')
+            })
+
+             // 메시지 마지막에 시간 추가하기
+            var minute_last_msg = $('.msg-list li').last();
+            minute_last_msg.append('<div class="msg-time"><span>04:12</span></div>')
+
+            // 엔터 키 활성화
+            $('#input_search').keydown(function(key) {
+                if(key.keyCode == 13) {
+                    console.log('enter')
+                }
+            })
+
+            // 검색
+            var keyword;
+            var temp;
+
+            $('#input_search').keyup(function() {
+                keyword = $(this).val();
+                temp = $('.msg:contains("' + keyword + '")'); // class="msg" 인 것 중 keyword를 찾는다.                
+                console.log(temp)
+            })
+
+            $('#btn_search').on('click', function() {
+                var offset = $(temp[i]).offset(); // 선택한 요소의 위치를 반환
+                $('.middle').animate({scrollTop : offset.top - 40}, 400);    
+            })        
+            
+        })
+
+        $(function() {
+            // 모바일 사이드 메뉴 버튼
+            $('.menu').on('click', function() {
+                $('.side-wrap').addClass('active')
+                $('body').css('overflow-y','hidden')
+            })
+
+            // 모바일 사이드 메뉴 닫기
+            $('.btn-prev.side').on('click', function(){
+                $('.side-wrap').removeClass('active')
+                $('body').css('overflow-y','scroll')
+            })
+
+            // 검색창 활성화
+            $('.search').on('click', function() {
+                $('.top-search').addClass('active')
+                $('#input_search').focus();
+                $('.top-header').css('display', 'none')
+            })
+
+            // 검색창 비활성화
+            $('.cancel-search').on('click', function() {
+                $('.top-search').removeClass('active');
+                $('.top-header').css('display', 'flex')
+            })
+
+        })
+
+        // 이미지 다운로드
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], {
+                type: mime
+            });
+        }
+
+        function downloadImg(imgSrc) {
+            var image = new Image();
+            image.crossOrigin = "anonymous";
+            image.src = imgSrc;
+            var fileName = image.src.split("/").pop();
+            
+            image.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = this.width;
+                canvas.height = this.height;
+                canvas.getContext('2d').drawImage(this, 0, 0);
+
+                if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    window.navigator.msSaveBlob(dataURLtoBlob(canvas.toDataURL()), fileName);
+                } else {
+                    var link = document.createElement('a');
+                    link.href = canvas.toDataURL();
+                    link.download = fileName;
+                    link.click();
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="content-wrap main">
+            <div class="side-wrap">
+                <div class="side-menu-wrap">
+                    <div class="side-top flexbox ai-center">
+                        <button class="btn-prev side">
+                            <img src="./images/ico_prev.png" alt="">
+                        </button>
+                        <h3 class="chat-name">김선우</h3>
+                        <span class="detail-name">THE BOYZ · 선우</span>
+                    </div>
+                </div>
+            </div>
+            <section class="top top-header flexbox ai-center jc-between">
+                <div class="left flexbox ai-center">
+                    <!-- <button class="btn-prev">
+                        <img src="./images/ico_prev.png" alt="">
+                    </button> -->
+                    <h3 class="title">선우의 기억</h3>
+                </div>
+                <div class="right">
+                    <!-- <button class="search">
+                        <img src="./images/ico_search.png" alt="">
+                    </button> -->
+                    <button class="menu">
+                        <img src="./images/ico_menu.png" alt="">
+                    </button>
+                </div>
+            </section>
+            <section class="middle no-bottom">
+                <div class="link-wrap flexbox fd-column ai-center jc-center">
+                    <ul class="link-list">
+                        <li>
+                            <a href="/list_year.html" class="flexbox fd-column ai-center jc-center">
+                                <img src="./images/ico_msg.png" alt="">
+                                <span>프메</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://tinted-salamander-678.notion.site/06bf88f9abb742e1b3a915abe892796f" class="flexbox fd-column ai-center jc-center" target="_blank">
+                                <img src="./images/logo_vlive.png" alt="">
+                                <span>브이앱</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
